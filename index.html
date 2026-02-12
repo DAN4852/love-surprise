@@ -3,183 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Memory Lock</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+<title>สำหรับเธอ 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 body{
-    margin:0;
-    font-family:'Kanit',sans-serif;
-    background:linear-gradient(135deg,#ffd6e7,#ffc2dc);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    overflow:hidden;
+  margin:0;
+  font-family:'Kanit',sans-serif;
+  background:linear-gradient(135deg,#ff9ecf,#ffc3e6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
 }
+
 .container{
-    background:white;
-    width:90%;
-    max-width:380px;
-    border-radius:25px;
-    padding:30px 20px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
-    position:relative;
-    z-index:2;
+  background:white;
+  padding:30px 20px;
+  border-radius:25px;
+  text-align:center;
+  width:90%;
+  max-width:380px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  position:relative;
 }
-.heart{
-    font-size:50px;
-    color:#ff5c8a;
-}
+
 h1{
-    color:#e63946;
-    margin:10px 0 5px;
+  color:#e6398f;
 }
-p{
-    color:#666;
-    font-size:14px;
+
+input{
+  padding:10px;
+  width:80%;
+  border-radius:20px;
+  border:1px solid #ff9ecf;
+  text-align:center;
+  font-size:16px;
 }
-.pin-box{
-    display:flex;
-    justify-content:space-between;
-    margin:20px 0;
+
+button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d88;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
 }
-.pin-box div{
-    width:45px;
-    height:55px;
-    border-radius:12px;
-    border:2px solid #ddd;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
+
+button:hover{
+  transform:scale(1.05);
 }
-button.unlock{
-    background:linear-gradient(45deg,#ff5c8a,#ff2e63);
-    border:none;
-    color:white;
-    padding:12px;
-    width:100%;
-    border-radius:30px;
-    font-size:16px;
-    margin-bottom:20px;
+
+.hidden{
+  display:none;
 }
-.keypad{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+
+/* หัวใจลอยกลางจอ */
+@keyframes floatHeart{
+  0%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-10px) scale(1.1);}
+  100%{transform:translateY(0) scale(1);}
 }
-.key{
-    background:#ffe5ee;
-    padding:15px;
-    border-radius:15px;
-    font-size:20px;
-    color:#e63946;
+
+.heart{
+  font-size:60px;
+  animation:floatHeart 2s ease-in-out infinite;
 }
-.key:active{
-    background:#ffccd9;
+
+/* เอฟเฟคแตก */
+@keyframes explode{
+  0%{opacity:1; transform:translate(0,0) scale(1);}
+  100%{opacity:0; transform:translate(var(--x),var(--y)) scale(0.5);}
 }
-.shake{
-    animation:shake 0.4s;
-}
-@keyframes shake{
-    0%{transform:translateX(0);}
-    25%{transform:translateX(-5px);}
-    50%{transform:translateX(5px);}
-    75%{transform:translateX(-5px);}
-    100%{transform:translateX(0);}
-}
-.floating-heart{
-    position:absolute;
-    color:#ff7aa2;
-    animation:float 6s linear infinite;
-    opacity:0.5;
-}
-@keyframes float{
-    0%{transform:translateY(100vh) scale(1);}
-    100%{transform:translateY(-10vh) scale(1.5);}
+
+.explode-heart{
+  position:absolute;
+  font-size:22px;
+  animation:explode 1s ease-out forwards;
+  pointer-events:none;
 }
 </style>
 </head>
+
 <body>
 
-<div class="container" id="box">
-    <div class="heart">❤</div>
-    <h1>ความทรงจำถูกล็อค</h1>
-    <p>ใส่รหัส PIN 6 หลักเพื่อปลดล็อค<br><small>วันที่เราคบกัน</small></p>
+<div class="container">
+  <div id="login">
+    <h1>ใส่รหัสก่อนนะ 💕</h1>
+    <input type="password" id="password" 
+           placeholder="ใส่รหัสตรงนี้"
+           oninput="miniHeartEffect()">
+    <br>
+    <button onclick="checkPassword()">ยืนยัน</button>
+  </div>
 
-    <div class="pin-box" id="pinBox">
-        <div></div><div></div><div></div>
-        <div></div><div></div><div></div>
-    </div>
-
-    <button class="unlock" onclick="checkPin()">ปลดล็อคความทรงจำ</button>
-
-    <div class="keypad">
-        <div class="key" onclick="addNum(1)">1</div>
-        <div class="key" onclick="addNum(2)">2</div>
-        <div class="key" onclick="addNum(3)">3</div>
-        <div class="key" onclick="addNum(4)">4</div>
-        <div class="key" onclick="addNum(5)">5</div>
-        <div class="key" onclick="addNum(6)">6</div>
-        <div class="key" onclick="addNum(7)">7</div>
-        <div class="key" onclick="addNum(8)">8</div>
-        <div class="key" onclick="addNum(9)">9</div>
-        <div></div>
-        <div class="key" onclick="addNum(0)">0</div>
-        <div class="key" onclick="delNum()">⌫</div>
-    </div>
+  <div id="surprise" class="hidden">
+    <div class="heart">❤️</div>
+    <h1>สุขสันต์วันของเรานะ 💖</h1>
+    <p>
+      ขอบคุณที่อยู่ข้างกันเสมอ<br>
+      ไม่ว่าจะทะเลาะกันแค่ไหน<br>
+      เค้าก็ยังเลือกเธอเหมือนเดิมนะ 💕
+    </p>
+  </div>
 </div>
 
 <script>
-let pin = "";
-const correctPin = "030568"; // 🔥 เปลี่ยนเป็นวันคบกันจริง
 
-const clickSound = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+/* เอฟเฟคหัวใจเล็กตอนกดตัวเลข */
+function miniHeartEffect(){
+  const input = document.getElementById("password");
+  const rect = input.getBoundingClientRect();
 
-function addNum(num){
-    if(pin.length < 6){
-        pin += num;
-        updatePin();
-        clickSound.play();
-    }
+  const heart = document.createElement("div");
+  heart.className = "explode-heart";
+  heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
+
+  heart.style.left = rect.left + rect.width/2 + "px";
+  heart.style.top = rect.top + rect.height/2 + "px";
+
+  heart.style.setProperty("--x",(Math.random()-0.5)*150+"px");
+  heart.style.setProperty("--y",(Math.random()-0.5)*150+"px");
+
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),800);
 }
 
-function delNum(){
-    pin = pin.slice(0,-1);
-    updatePin();
-}
+/* เอฟเฟคระเบิดใหญ่ตอนรหัสถูก */
+function heartExplosion(){
+  for(let i=0;i<35;i++){
+    const heart=document.createElement("div");
+    heart.className="explode-heart";
+    heart.innerHTML=Math.random()>0.5?"❤️":"💗";
 
-function updatePin(){
-    const boxes = document.querySelectorAll("#pinBox div");
-    boxes.forEach((box,i)=>{
-        box.textContent = pin[i] ? "●" : "";
-    });
-}
+    heart.style.left="50%";
+    heart.style.top="50%";
 
-function checkPin(){
-    if(pin === correctPin){
-        window.location.href = "home.html";
-    }else{
-        document.getElementById("box").classList.add("shake");
-        setTimeout(()=>{
-            document.getElementById("box").classList.remove("shake");
-        },400);
-        pin="";
-        updatePin();
-    }
-}
+    heart.style.setProperty("--x",(Math.random()-0.5)*400+"px");
+    heart.style.setProperty("--y",(Math.random()-0.5)*400+"px");
 
-/* หัวใจลอย */
-for(let i=0;i<15;i++){
-    let heart=document.createElement("div");
-    heart.innerHTML="❤";
-    heart.className="floating-heart";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(20+Math.random()*20)+"px";
-    heart.style.animationDuration=(4+Math.random()*4)+"s";
     document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),1000);
+  }
 }
+
+function checkPassword(){
+  const password=document.getElementById("password").value;
+
+  if(password==="1234"){   // 🔥 เปลี่ยนรหัสตรงนี้ได้
+    heartExplosion();
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("surprise").classList.remove("hidden");
+  }else{
+    alert("ใส่ไม่ถูกนะคนดีย์ 💕");
+  }
+}
+
 </script>
 
 </body>
