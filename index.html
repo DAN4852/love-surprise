@@ -32,6 +32,7 @@ body{
 
 h1{
   color:#e6398f;
+  margin-bottom:10px;
 }
 
 input{
@@ -63,7 +64,7 @@ button:hover{
   display:none;
 }
 
-/* หัวใจลอยกลางจอ */
+/* หัวใจขยับ */
 @keyframes floatHeart{
   0%{transform:translateY(0) scale(1);}
   50%{transform:translateY(-10px) scale(1.1);}
@@ -95,9 +96,7 @@ button:hover{
 <div class="container">
   <div id="login">
     <h1>ใส่รหัสก่อนนะ 💕</h1>
-    <input type="password" id="password" 
-           placeholder="ใส่รหัสตรงนี้"
-           oninput="miniHeartEffect()">
+    <input type="password" id="password" placeholder="ใส่รหัสตรงนี้">
     <br>
     <button onclick="checkPassword()">ยืนยัน</button>
   </div>
@@ -105,38 +104,15 @@ button:hover{
   <div id="surprise" class="hidden">
     <div class="heart">❤️</div>
     <h1>สุขสันต์วันของเรานะ 💖</h1>
-    <p>
-      ขอบคุณที่อยู่ข้างกันเสมอ<br>
-      ไม่ว่าจะทะเลาะกันแค่ไหน<br>
-      เค้าก็ยังเลือกเธอเหมือนเดิมนะ 💕
-    </p>
+    <p>ขอบคุณที่อยู่ข้างกันเสมอ  
+    ไม่ว่าจะทะเลาะกันแค่ไหน  
+    เค้าก็ยังเลือกเธอเหมือนเดิมนะ 💕</p>
   </div>
 </div>
 
 <script>
-
-/* เอฟเฟคหัวใจเล็กตอนกดตัวเลข */
-function miniHeartEffect(){
-  const input = document.getElementById("password");
-  const rect = input.getBoundingClientRect();
-
-  const heart = document.createElement("div");
-  heart.className = "explode-heart";
-  heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
-
-  heart.style.left = rect.left + rect.width/2 + "px";
-  heart.style.top = rect.top + rect.height/2 + "px";
-
-  heart.style.setProperty("--x",(Math.random()-0.5)*150+"px");
-  heart.style.setProperty("--y",(Math.random()-0.5)*150+"px");
-
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),800);
-}
-
-/* เอฟเฟคระเบิดใหญ่ตอนรหัสถูก */
 function heartExplosion(){
-  for(let i=0;i<35;i++){
+  for(let i=0;i<30;i++){
     const heart=document.createElement("div");
     heart.className="explode-heart";
     heart.innerHTML=Math.random()>0.5?"❤️":"💗";
@@ -163,7 +139,6 @@ function checkPassword(){
     alert("ใส่ไม่ถูกนะคนดีย์ 💕");
   }
 }
-
 </script>
 
 </body>
