@@ -3,90 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>สำหรับเธอ 💖</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+<title>เค้าขอโทษนะ 🤍</title>
 
 <style>
 body{
-  margin:0;
-  font-family:'Kanit',sans-serif;
-  background:linear-gradient(135deg,#ff9ecf,#ffc3e6);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
+    margin:0;
+    padding:0;
+    background: linear-gradient(135deg,#ff758c,#ff7eb3);
+    font-family:sans-serif;
+    text-align:center;
+    color:white;
+    overflow:hidden;
 }
 
 .container{
-  background:white;
-  padding:30px 20px;
-  border-radius:25px;
-  text-align:center;
-  width:90%;
-  max-width:380px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  position:relative;
+    margin-top:120px;
 }
 
 h1{
-  color:#e6398f;
-  margin-bottom:10px;
+    font-size:36px;
 }
 
-input{
-  padding:10px;
-  width:80%;
-  border-radius:20px;
-  border:1px solid #ff9ecf;
-  text-align:center;
-  font-size:16px;
+p{
+    font-size:20px;
+    width:80%;
+    margin:auto;
 }
 
 button{
-  margin-top:15px;
-  padding:10px 25px;
-  border:none;
-  border-radius:20px;
-  background:#ff4d88;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.05);
-}
-
-.hidden{
-  display:none;
-}
-
-/* หัวใจขยับ */
-@keyframes floatHeart{
-  0%{transform:translateY(0) scale(1);}
-  50%{transform:translateY(-10px) scale(1.1);}
-  100%{transform:translateY(0) scale(1);}
+    margin-top:30px;
+    padding:15px 30px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    background:white;
+    color:#ff4b6e;
+    cursor:pointer;
 }
 
 .heart{
-  font-size:60px;
-  animation:floatHeart 2s ease-in-out infinite;
+    position:fixed;
+    animation:floatUp 4s linear forwards;
 }
 
-/* เอฟเฟคแตก */
-@keyframes explode{
-  0%{opacity:1; transform:translate(0,0) scale(1);}
-  100%{opacity:0; transform:translate(var(--x),var(--y)) scale(0.5);}
-}
-
-.explode-heart{
-  position:absolute;
-  font-size:22px;
-  animation:explode 1s ease-out forwards;
-  pointer-events:none;
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-600px);opacity:0;}
 }
 </style>
 </head>
@@ -94,50 +56,30 @@ button:hover{
 <body>
 
 <div class="container">
-  <div id="login">
-    <h1>ใส่รหัสก่อนนะ 💕</h1>
-    <input type="password" id="password" placeholder="ใส่รหัสตรงนี้">
-    <br>
-    <button onclick="checkPassword()">ยืนยัน</button>
-  </div>
-
-  <div id="surprise" class="hidden">
-    <div class="heart">❤️</div>
-    <h1>สุขสันต์วันของเรานะ 💖</h1>
-    <p>ขอบคุณที่อยู่ข้างกันเสมอ  
-    ไม่ว่าจะทะเลาะกันแค่ไหน  
-    เค้าก็ยังเลือกเธอเหมือนเดิมนะ 💕</p>
-  </div>
+    <h1>เค้าขอโทษนะ 🥺</h1>
+    <p>
+        เค้าอาจทำให้เธอเสียใจ  
+        แต่เธอคือคนสำคัญที่สุดของเค้านะ  
+        ดีกับเค้าหน่อยน้าา 💕
+    </p>
+    <button onclick="love()">กดตรงนี้สิ 🤍</button>
 </div>
 
 <script>
-function heartExplosion(){
-  for(let i=0;i<30;i++){
-    const heart=document.createElement("div");
-    heart.className="explode-heart";
-    heart.innerHTML=Math.random()>0.5?"❤️":"💗";
+function love(){
+    alert("เค้ารักเธอที่สุดเลย 💖");
 
-    heart.style.left="50%";
-    heart.style.top="50%";
+    for(let i=0;i<50;i++){
+        let heart=document.createElement("div");
+        heart.innerHTML="💖";
+        heart.className="heart";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.bottom="0px";
+        heart.style.fontSize=(Math.random()*20+15)+"px";
+        document.body.appendChild(heart);
 
-    heart.style.setProperty("--x",(Math.random()-0.5)*400+"px");
-    heart.style.setProperty("--y",(Math.random()-0.5)*400+"px");
-
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),1000);
-  }
-}
-
-function checkPassword(){
-  const password=document.getElementById("password").value;
-
-  if(password==="1234"){   // 🔥 เปลี่ยนรหัสตรงนี้ได้
-    heartExplosion();
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("surprise").classList.remove("hidden");
-  }else{
-    alert("ใส่ไม่ถูกนะคนดีย์ 💕");
-  }
+        setTimeout(()=>{heart.remove();},4000);
+    }
 }
 </script>
 
